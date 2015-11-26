@@ -26,7 +26,7 @@
     "adm-zip": "=0.4.7",
     "agentkeepalive": "=2.0.3",
     "aws-sdk": "=2.2.33",
-    "bcryptjs": "=2.3.0",
+    "bcrypt": "git://github.com/ksmyth/node.bcrypt.js.git#v0.8.5",
     "body-parser": "=1.14.2",
     "buffer-equal-constant-time": "=1.0.1",
     "commander": "=2.9.0",

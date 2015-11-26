@@ -8,8 +8,8 @@
 
 var Mongodb = require('mongodb'),
     Q = require('q'),
-    //bcrypt = require('bcrypt'), include bcrypt and uncomment this line for faster encryption/decryption.
-    bcrypt = require('bcryptjs'),
+    bcrypt = require('bcrypt'), //include bcrypt and uncomment this line for faster encryption/decryption.
+    //bcrypt = require('bcryptjs'),
 
     GUID = requireJS('common/util/guid'),
 
