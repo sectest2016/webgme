@@ -23,6 +23,7 @@ define([
         'js/Dialogs/Projects/ProjectsDialog',
         'js/Utils/InterpreterManager',
         'js/Utils/ComponentSettings',
+        'js/Utils/Recorder',
         'common/storage/util',
         'q',
         'jquery'
@@ -43,6 +44,7 @@ define([
                  ProjectsDialog,
                  InterpreterManager,
                  ComponentSettings,
+                 Recorder,
                  StorageUtil,
                  Q) {
 
@@ -120,6 +122,7 @@ define([
                 });
 
                 WebGMEGlobal.State.registerLayout(initialThingsToDo.layoutToLoad);
+                WebGMEGlobal.recorder = new Recorder(client);
 
                 document.title = config.pageTitle;
 

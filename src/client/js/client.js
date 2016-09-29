@@ -713,6 +713,10 @@ define([
                 addModification(commitData.commitObject, clearUndoRedo);
                 self.dispatchEvent(CONSTANTS.UNDO_AVAILABLE, canUndo());
                 self.dispatchEvent(CONSTANTS.REDO_AVAILABLE, canRedo());
+                self.dispatchEvent(CONSTANTS.NEW_COMMIT_STATE, {
+                    commitObject: commitData.commitObject,
+                    uiState: self.uiStateGetter()
+                });
 
                 logger.debug('loading commitHash, local?', commitHash, data.local);
                 loading(commitData.commitObject.root, commitHash, commitData.changedNodes, function (err, aborted) {
@@ -2084,6 +2088,8 @@ define([
         this.dispatchConnectedUsersChanged = function (eventData) {
             self.dispatchEvent(CONSTANTS.CONNECTED_USERS_CHANGED, eventData);
         };
+
+        this.uiStateGetter = function () { return {}; };
 
         this.registerUIStateGetter = function (uiStateGetter) {
             self.uiStateGetter = uiStateGetter;
