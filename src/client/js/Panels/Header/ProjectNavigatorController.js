@@ -17,6 +17,7 @@ define([
     'js/Dialogs/Branches/BranchesDialog',
     'js/Dialogs/ConfirmDelete/ConfirmDeleteDialog',
     'js/Dialogs/ApplyCommitQueue/ApplyCommitQueueDialog',
+    'js/Dialogs/RecordAndReplay/RecordAndReplayDialog',
     'common/storage/util',
     'js/Utils/SaveToDisk',
     'js/Utils/Exporters',
@@ -33,6 +34,7 @@ define([
              BranchesDialog,
              ConfirmDeleteDialog,
              ApplyCommitQueueDialog,
+             RecordAndReplayDialog,
              StorageUtil,
              saveToDisk,
              exporters,
@@ -421,11 +423,6 @@ define([
     ProjectNavigatorController.prototype.addProject = function (projectId, rights, info, noUpdate, callback) {
         var self = this,
             i,
-            showHistory,
-            showAllBranches,
-            deleteProject,
-            selectProject,
-            updateProjectList,
             projectDisplayedName;
 
         rights = rights || {
@@ -438,15 +435,18 @@ define([
             StorageUtil.getProjectDisplayedNameFromProjectId(projectId) :
             StorageUtil.getProjectNameFromProjectId(projectId);
 
-        updateProjectList = function () {
-            self.updateProjectList.call(self);
-        };
-
-        showHistory = function (data) {
+        function showHistory(data) {
             self.showHistory(data);
-        };
+        }
 
-        deleteProject = function (data) {
+        function recordAndReplay(data) {
+            var recModal = new RecordAndReplayDialog();
+            recModal.show(data, function () {
+                console.log('closed');
+            });
+        }
+
+         function deleteProject(data) {
             var deleteProjectModal = new ConfirmDeleteDialog();
             deleteProjectModal.show({deleteItem: projectDisplayedName}, function () {
                 self.gmeClient.deleteProject(data.projectId, function (err) {
@@ -461,9 +461,9 @@ define([
                     }
                 });
             });
-        };
+        }
 
-        showAllBranches = function (data) {
+         function showAllBranches(data) {
             var prd;
             if (self.gmeClient.getActiveProjectId() === data.projectId) {
                 prd = new BranchesDialog(self.gmeClient);
@@ -480,11 +480,11 @@ define([
                     dialog.show();
                 });
             }
-        };
+        }
 
-        selectProject = function (data) {
+        function selectProject(data) {
             self.selectProject(data);
-        };
+        }
 
         // create a new project object
         self.projects[projectId] = {
@@ -512,6 +512,16 @@ define([
                             iconClass: 'glyphicon glyphicon-time',
                             disabled: !rights.read,
                             action: showHistory,
+                            actionData: {
+                                projectId: projectId
+                            }
+                        },
+                        {
+                            id: 'recordAndReplay',
+                            label: 'Record and Replay ...',
+                            iconClass: 'glyphicon glyphicon-facetime-video',
+                            disabled: !rights.read,
+                            action: recordAndReplay,
                             actionData: {
                                 projectId: projectId
                             }
