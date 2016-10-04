@@ -440,7 +440,7 @@ define([
         }
 
         function recordAndReplay(data) {
-            var recModal = new RecordAndReplayDialog();
+            var recModal = new RecordAndReplayDialog(self.logger);
             recModal.show(data, function () {
                 console.log('closed');
             });
