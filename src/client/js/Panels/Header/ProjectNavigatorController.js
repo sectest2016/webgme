@@ -17,7 +17,6 @@ define([
     'js/Dialogs/Branches/BranchesDialog',
     'js/Dialogs/ConfirmDelete/ConfirmDeleteDialog',
     'js/Dialogs/ApplyCommitQueue/ApplyCommitQueueDialog',
-    'js/Dialogs/RecordAndReplay/RecordAndReplayDialog',
     'common/storage/util',
     'js/Utils/SaveToDisk',
     'js/Utils/Exporters',
@@ -34,7 +33,6 @@ define([
              BranchesDialog,
              ConfirmDeleteDialog,
              ApplyCommitQueueDialog,
-             RecordAndReplayDialog,
              StorageUtil,
              saveToDisk,
              exporters,
@@ -439,13 +437,6 @@ define([
             self.showHistory(data);
         }
 
-        function recordAndReplay(data) {
-            var recModal = new RecordAndReplayDialog(self.logger);
-            recModal.show(data, function () {
-                console.log('closed');
-            });
-        }
-
          function deleteProject(data) {
             var deleteProjectModal = new ConfirmDeleteDialog();
             deleteProjectModal.show({deleteItem: projectDisplayedName}, function () {
@@ -512,16 +503,6 @@ define([
                             iconClass: 'glyphicon glyphicon-time',
                             disabled: !rights.read,
                             action: showHistory,
-                            actionData: {
-                                projectId: projectId
-                            }
-                        },
-                        {
-                            id: 'recordAndReplay',
-                            label: 'Record and Replay ...',
-                            iconClass: 'glyphicon glyphicon-facetime-video',
-                            disabled: !rights.read,
-                            action: recordAndReplay,
                             actionData: {
                                 projectId: projectId
                             }
