@@ -1201,21 +1201,27 @@ define([
             return getNode(nodePath, logger, state, storeNode);
         };
 
-        this.getAllMetaNodes = function () {
+        this.getAllMetaNodes = function (asObject) {
             if (state && state.core && state.nodes && state.nodes[ROOT_PATH]) {
                 var metaNodes = state.core.getAllMetaNodes(state.nodes[ROOT_PATH].node),
-                    gmeNodes = [],
+                    gmeNodes = asObject ? {}: [],
+                    gmeNode,
                     keys = Object.keys(metaNodes || {}),
                     i;
 
                 for (i = 0; i < keys.length; i += 1) {
-                    gmeNodes.push(self.getNode(storeNode(metaNodes[keys[i]]), logger, state, storeNode));
+                    gmeNode = self.getNode(storeNode(metaNodes[keys[i]]), logger, state, storeNode);
+                    if (asObject) {
+                        gmeNodes[keys[i]] = gmeNode;
+                    } else {
+                        gmeNodes.push(gmeNode);
+                    }
                 }
 
                 return gmeNodes;
             }
 
-            return [];
+            return asObject ? {} : [];
         };
 
         function addLoadUnloadPathToUpdates(paths) {
