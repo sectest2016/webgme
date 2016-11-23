@@ -11,7 +11,7 @@ define(['js/RegistryKeys'], function (REG_KEYS) {
     function _logDeprecated(oldFn, newFn, comment) {
         var commentStr = comment ? comment : '';
         console.warn('"gmeNode.' + oldFn + '" is deprecated and will eventually be removed, use "gmeNode.' + newFn +
-        '" instead.' + commentStr);
+            '" instead.' + commentStr);
     }
 
     function _getNode(nodes, path) {
@@ -58,12 +58,7 @@ define(['js/RegistryKeys'], function (REG_KEYS) {
     };
 
     GMENode.prototype.getBaseId = function () {
-        var base = this._state.core.getBase(this._state.nodes[this._id].node);
-        if (base) {
-            return this._storeNode(base);
-        } else {
-            return null;
-        }
+        return this._storeNode(this._state.core.getBase(this._state.nodes[this._id].node));
     };
 
     GMENode.prototype.isValidNewBase = function (basePath) {
@@ -97,7 +92,7 @@ define(['js/RegistryKeys'], function (REG_KEYS) {
     };
 
     GMENode.prototype.getInheritorIds = function () {
-        return [];
+        return this._state.core.getInstancePaths(this._state.nodes[this._id].node);
     };
 
     GMENode.prototype.getAttribute = function (name) {

@@ -1209,11 +1209,11 @@ define([
         };
 
         this.getOwnPointerPath = function (node, name) {
-            innerCore.getPointerPath(node, name);
+            return innerCore.getPointerPath(node, name);
         };
 
         this.getOwnPointerPathFrom = function (node, source, name) {
-            innerCore.getPointerPathFrom(node, source, name);
+            return innerCore.getPointerPathFrom(node, source, name);
         };
 
         this.getOwnChildrenPaths = function (node) {
